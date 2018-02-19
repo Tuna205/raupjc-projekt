@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Mvc.Internal
+@using Zadatak2.Views
+@model Zadatak2.Models.TodoViewModel
+
+    
+<div class="container">
+    <font size="+2"><b ><a href=#@ViewData["broj"] data-toggle="collapse"> @Model.Text </a></b></font>
+    <div id=@ViewData["broj"] class="collapse">
+        @if ((bool) ViewData["rok"])
+        {
+           <b> <span style="color: red"> @Model.GetDaysLeft() </span></b>
+            
+        }
+        @if (Model.Labele.Count != 0)
+        {
+            <b><span> Labele: </span></b>foreach (var lab in Model.Labele)
+                                  {
+                                      <b><span> @lab.Value, </span></b>
+
+                                  }
+            <br/>}
+       <b> @ViewData["funkcija"]</b>
+        <br/>
+        @if (ViewData["link"].Equals("Complete"))
+        {
+            <a class="btn btn-success" asp-action="MarkAsCompleted" asp-route-itemId="@Model._Id">Mark as compleated</a>}
+        else
+        {
+            <a class="btn btn-danger" asp-action="RemoveFromCompleted" asp-route-itemId="@Model._Id">Remove from completed</a>}
+    </div>
+</div>
+<br>

@@ -1,0 +1,45 @@
+﻿@using System.Text.Encodings.Web
+@using Zadatak2
+@model List<Zadatak2.Models.TodoViewModel>
+
+<html>
+<head>
+    
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-header">Todo Tasks</h1>
+
+
+        <a asp-action="Add" class="btn btn-default btn-info">Add new todo  <span class="glyphicon glyphicon-plus"></span></a>
+        <a asp-action="Completed" class="btn btn-default btn-info">See completed todos  <span class="glyphicon glyphicon-ok"></a>
+
+        <br>
+        <br>
+
+
+        @if (Model != null)
+        {
+            int i = 0;
+            foreach (var active in Model)
+            {
+                if (active.DateDue != null)
+                {
+                    var forRender = Html.Partial("_PartialTodo", active, 
+                        new ViewDataDictionary(this.ViewData) { { "broj", i }, { "rok", true }, { "funkcija", active.DateDue.Value.ToString("D") }, { "link", "Complete" } });
+                    @forRender}
+                else
+                {
+                    var forRender = Html.Partial("_PartialTodo", active, 
+                        new ViewDataDictionary(this.ViewData) { { "broj", i }, { "rok", true }, { "funkcija", null }, { "link", "Complete" } });
+                    @forRender}
+                i++;
+                //Html.RenderPartial("_PartialTodo", active);
+
+            }
+
+
+        }
+    </div>
+</body>
+</html>
